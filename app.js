@@ -334,6 +334,8 @@ function renderModul1(app) {
     div.querySelector("#m1_zuschussBetrag").onchange = (e) => {
         const v = Number(e.target.value);
         D.settings.zuschussBetrag = v >= 0 ? v : 0;
+
+        renderAll(); // UI neu zeichnen
     };
 }
 
