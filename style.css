@@ -1,0 +1,345 @@
+/* ========= Globaler Look ========= */
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: #f1f3f6;
+    color: #222;
+}
+
+/* Header */
+header {
+    background: #57A41B;;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;      /* zentriert */
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Standard-Button */
+button {
+    padding: 10px 20px;
+    border: none;
+    background: #57A41B;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+}
+button:hover {
+    background: black;
+}
+
+.btnDelete {
+    background: red;
+    width: 58px;
+}
+
+input#jsonLoader[type="file"] {
+    display: none;
+}
+.file-upload {
+    margin-top:12px;
+    padding: 8.5px 20px;
+    border: none;
+    background: #bbb;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+}
+.file-upload:hover {
+    background: black;
+}
+
+#btnAboNeu, #btnTrainerNeu, #btnSpielerNeu, #btnTPNeu, #btnCalcKosten {
+    margin-bottom: 12px;
+}
+
+#modul-1-start {
+    display: flex;
+    justify-content: center;     /* Buttons in der Mitte */
+    align-items: center;
+    gap: 15px;                   /* Abstand zwischen Buttons */
+    padding: 20px;
+}
+
+#modul-1-start input[type="file"] {
+    padding: 8px;
+    border-radius: 4px;
+}
+
+/* ========= Karten- / Kachel-Design ========= */
+
+.section-card {
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 25px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+/* Abschnittsüberschriften */
+.section-card h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 22px;
+    color: #57A41B;
+}
+
+/* Labels */
+label {
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+/* Inputs */
+input[type="date"], input[type="text"], input[type="email"], input[type="time"], input[type="number"], input[type="checkbox"], select {
+    padding: 5px 5px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    margin-top: 8px; */
+    /* font-size: 15px; */
+    background: white;
+}
+
+/* ========= Tabellen ========= */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #bbb;    /* Außenrahmen */
+}
+
+th {
+    background: #ececf3;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid #bbb;
+    border-right: 1px solid #bbb;
+}
+
+td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #bbb;
+    border-right: 1px solid #bbb;
+    font-size: 14px;
+}
+
+td:last-child,
+th:last-child {
+    border-right: none;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.table-bordered {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+}
+
+.table-bordered th {
+    background-color: #dedede;
+}
+
+/* ========= Overlay & Dialog ========= */
+
+#overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    background: rgba(0,0,0,0.55);
+    justify-content: center;
+    align-items: center;
+}
+
+#overlay.show {
+    display: flex;
+}
+
+#dialog {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 600px;
+    white-space: normal;
+    /* width: 90%; */
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+}
+
+#dialog button {
+    margin-right: 12px;
+    margin-top: 10px;
+}
+
+#dialog select {
+    width: 100%;         /* Dropdown nimmt die ganze Breite */
+    box-sizing: border-box;
+}
+
+#dialog h3 {
+    margin-top: 0;
+    color: #57A41B;
+}
+
+/* ==== Akkordeon für Feiertage & Ferien ==== */
+
+.accordion-year {
+    border: 1px solid #d0d0d0;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background: #fafafa;
+}
+
+.accordion-header {
+    padding: 10px 14px;
+    cursor: pointer;
+    background: #e9e9e9;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion-header:hover {
+    background: #dedede;
+}
+
+.accordion-arrow {
+    transition: transform 0.2s;
+}
+
+.accordion-arrow.open {
+    transform: rotate(90deg);
+}
+
+.accordion-content {
+    display: none;
+    padding: 10px 20px;
+    line-height: 1.5;
+    background: #fff;
+}
+
+.accordion-content ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.accordion-content li {
+    margin: 2px 0;
+}
+
+/* =========================================================
+   MODUL 8 – Tabellenlayout
+   ========================================================= */
+
+.mod8-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+/* Standardzellen */
+.mod8-table th,
+.mod8-table td {
+    border: 1px solid #ccc;
+    padding: 4px 6px;
+    vertical-align: top;
+    background: #fff;
+    height: 20px;  /* FESTE ZEILENHÖHE */
+}
+
+/* Zeitspalte */
+.mod8-col-time,
+.mod8-time {
+    width: 30px !important;
+    text-align: center !important;
+    white-space: nowrap;
+    background: #fafafa;
+    font-weight: bold;
+}
+
+.mod8-empty {
+    background: #fff !important;
+}
+
+
+/* =========================================================
+   TRAININGSBLOCK – HINTERGRUND & RAHMEN
+   ========================================================= */
+
+/* Jeder Block bekommt grauen Hintergrund */
+.mod8-blockcell {
+    background: #f5f5f5 !important;
+}
+
+/* Standardmäßig ALLE inneren Linien entfernen */
+.mod8-blockcell {
+    border-top: none !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-right: none !important;
+}
+
+/* Außenrahmen — 2px */
+.mod8-block-top {
+    border-top: 2px solid #999 !important;
+}
+.mod8-block-bottom {
+    border-bottom: 2px solid #999 !important;
+}
+.mod8-block-left {
+    border-left: 2px solid #999 !important;
+}
+.mod8-block-right {
+    border-right: 2px solid #999 !important;
+    text-align: right;
+}
+
+
+/* =========================================================
+   SPEZIALFÄLLE LEERE ZELLEN IM BLOCK
+   ========================================================= */
+
+.mod8-cell-inner-empty {
+    background: #f5f5f5 !important;
+}
+
+/* ===============================================
+   MODUL 8 – Kopfzeilen & Zeitspalte Hintergrund
+   =============================================== */
+
+.mod8-table thead tr:first-child th {
+    background: #dedede;        /* dein Grün */
+    color: black;
+    font-weight: bold;
+}
+
+.mod8-table thead tr:nth-child(2) th {
+    background: #e9e9e9;        /* sehr hell als Beruhigung */
+}
+
+.mod8-col-time,
+.mod8-time {
+    background: #e9e9e9 !important;
+    color: black;
+    border-right: 1px solid #dedede !important;
+}

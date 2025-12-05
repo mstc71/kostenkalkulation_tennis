@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Kostenkalkulation - Training</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Kostenkalkulation - Training</h1>
+    </header>
+
+    <!-- Startbereich -->
+    <section id="modul-1-start">
+        <button id="btnNeuesProjekt">Neues Projekt starten</button>
+        <label for="jsonLoader" class="file-upload">
+	        Projekt laden
+            <!-- <span>Projekt laden</span> -->
+        </label>
+        <input type="file" id="jsonLoader" accept="application/json"/>
+
+    </section>
+
+    <!-- Overlay für Dialog -->
+    <div id="overlay">
+        <div id="dialog"></div>
+    </div>
+
+    <!-- Hauptcontainer -->
+    <div id="app"></div>
+
+    <!-- Daten: Feiertage + Ferien -->
+    <script src="de_daten.js"></script>
+
+    <!-- XLSX-Export -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+
+    <!-- App -->
+    <script src="app.js"></script>
+
+</body>
+</html>
