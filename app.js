@@ -709,12 +709,38 @@ function saveAbo(id) {
     }
 
     // --- 🔽 Sortierung der Abos ---
-    D.abos.sort((a, b) => 
-        //a.startdatum.localeCompare(b.startdatum) ||
-        a.startzeit.localeCompare(b.startzeit) ||
-        a.platz.localeCompare(b.platz) ||
-        a.wochentag.localeCompare(b.wochentag)
-    );
+    const wtagOrder = {
+        "Montag": 1,
+        "Dienstag": 2,
+        "Mittwoch": 3,
+        "Donnerstag": 4,
+        "Freitag": 5,
+        "Samstag": 6,
+        "Sonntag": 7
+    };
+
+    function extractPlatzNum(platz) {
+        const m = platz.match(/\d+/);
+        return m ? parseInt(m[0], 10) : Number.MAX_SAFE_INTEGER;
+    }
+
+    D.abos.sort((a, b) => {
+
+        // 1) Wochentag
+        const cmpTag = wtagOrder[a.wochentag] - wtagOrder[b.wochentag];
+        if (cmpTag !== 0) return cmpTag;
+
+        // 2) numerische Platzsortierung
+        const cmpPlatz = extractPlatzNum(a.platz) - extractPlatzNum(b.platz);
+        if (cmpPlatz !== 0) return cmpPlatz;
+
+        // 3) Startdatum
+        const cmpDatum = a.startdatum.localeCompare(b.startdatum);
+        if (cmpDatum !== 0) return cmpDatum;
+
+        // 4) Startzeit
+        return a.startzeit.localeCompare(b.startzeit);
+    });
 
     // Dialog schließen & Oberfläche neu aufbauen
     document.getElementById("overlay").classList.remove("show");
@@ -1470,30 +1496,40 @@ function saveTP(id) {
     berechneTPJahresdaten(tpFinal);
 
     // --- 🔽 SORTIERUNG DER TRAININGSPLÄNE ---
+    const wtagOrder = {
+        "Montag": 1,
+        "Dienstag": 2,
+        "Mittwoch": 3,
+        "Donnerstag": 4,
+        "Freitag": 5,
+        "Samstag": 6,
+        "Sonntag": 7
+    };
+
+    function extractPlatzNum(platz) {
+        const m = platz.match(/\d+/);
+        return m ? parseInt(m[0], 10) : Number.MAX_SAFE_INTEGER;
+    }
+
     D.trainingsplan.sort((a, b) => {
 
-        // 1) Zeitraum (vonDatum)
-        const cmpDatum = a.vonDatum.localeCompare(b.vonDatum);
-        if (cmpDatum !== 0) return cmpDatum;
-
-        // 2) Zeit (vonZeit)
-        const cmpZeit = a.vonZeit.localeCompare(b.vonZeit);
-        if (cmpZeit !== 0) return cmpZeit;
-
-        // --- Abo-Daten laden für Platz & Wochentag ---
         const aboA = D.abos.find(x => x.id === a.aboId);
         const aboB = D.abos.find(x => x.id === b.aboId);
 
-        // 3) Platz
-        const platzA = aboA ? aboA.platz : "";
-        const platzB = aboB ? aboB.platz : "";
-        const cmpPlatz = platzA.localeCompare(platzB);
+        // 1) Wochentag
+        const cmpTag = wtagOrder[aboA.wochentag] - wtagOrder[aboB.wochentag];
+        if (cmpTag !== 0) return cmpTag;
+
+        // 2) numerische Platzsortierung
+        const cmpPlatz = extractPlatzNum(aboA.platz) - extractPlatzNum(aboB.platz);
         if (cmpPlatz !== 0) return cmpPlatz;
 
-        // 4) Wochentag
-        const tagA = aboA ? aboA.wochentag : "";
-        const tagB = aboB ? aboB.wochentag : "";
-        return tagA.localeCompare(tagB);
+        // 3) Abo-Startdatum
+        const cmpDatum = aboA.startdatum.localeCompare(aboB.startdatum);
+        if (cmpDatum !== 0) return cmpDatum;
+
+        // 4) Trainingsplan-Zeit
+        return a.vonZeit.localeCompare(b.vonZeit);
     });
 
     // --- Dialog schließen ---
