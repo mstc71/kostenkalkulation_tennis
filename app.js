@@ -710,7 +710,7 @@ function saveAbo(id) {
 
     // --- 🔽 Sortierung der Abos ---
     D.abos.sort((a, b) => 
-        a.startdatum.localeCompare(b.startdatum) ||
+        //a.startdatum.localeCompare(b.startdatum) ||
         a.startzeit.localeCompare(b.startzeit) ||
         a.platz.localeCompare(b.platz) ||
         a.wochentag.localeCompare(b.wochentag)
