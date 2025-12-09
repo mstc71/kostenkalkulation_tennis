@@ -1649,7 +1649,7 @@ function berechneTPJahresdaten(tp) {
 
         // Feiertag?
         const istFeiertag =
-            (DE_DATES["Hessen"].feiertage[y] || []).includes(iso);
+            (DE_DATES["Hessen"].feiertage[y] || []).some(f => f.datum === iso);
 
         let istFerien = false;
 
