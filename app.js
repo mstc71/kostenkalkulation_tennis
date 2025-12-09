@@ -232,7 +232,6 @@ function modul2_berechneTrainingstage() {
         jahrObj.max++;
 
         // Feiertag (jahresspezifisch)
-        //const istFeiertag = (alleFeiertage[year] || []).includes(iso);
         const istFeiertag = (alleFeiertage[year] || []).some(f => f.datum === iso);
 
         // Ferien (jahresübergreifend!)
@@ -668,8 +667,12 @@ function saveAbo(id) {
     const kosten     = Number(document.getElementById("abo_kosten").value);
 
     // --- Validierung ---
-    if (!tag || !platz || !startdatum || !enddatum || !startzeit || !endzeit || !kosten) {
+    if (!tag || !platz || !startdatum || !enddatum || !startzeit || !endzeit) {
         showDialogMessage("Abo prüfen", "Bitte alle Felder ausfüllen.");
+        return;
+    }
+    if (isNaN(kosten) || kosten < 0) {
+        showDialogMessage("Abo prüfen", "Kosten müssen 0 oder größer sein.");
         return;
     }
     if (startdatum > enddatum) {
@@ -2018,7 +2021,6 @@ function renderModul8(app) {
     div.innerHTML = `
         <h2>8. Trainingsübersicht</h2>
         <button id="btnTPExportXLSX">XLSX exportieren</button>
-        <button id="btnTPExportPDF">PDF exportieren</button>
     `;
 
     if (tps.length === 0) {
@@ -2057,7 +2059,7 @@ function renderModul8(app) {
     /* ---------------------------------------------------------
        2) Wochentage
        --------------------------------------------------------- */
-    const tage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+    const tage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
     //const tage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
 
 
@@ -2135,8 +2137,8 @@ function renderModul8(app) {
             <colgroup>
                 <col class="mod8-col-time">
                 ${tage.map(() => `
-                    <col style="width:10%;">
-                    <col style="width:5%;">
+                    <col style="width:13%;">
+                    <col style="width:7%;">
                     <!--
                     <col style="width:10%;">
                     <col style="width:4.28%;">
@@ -2221,7 +2223,6 @@ function renderModul8(app) {
     app.appendChild(div);
 
     div.querySelector("#btnTPExportXLSX").onclick = () => exportTrainingsplanXLSX();
-    div.querySelector("#btnTPExportPDF").onclick = () => exportTrainingsplanPDF();
 
 }
 
@@ -2232,7 +2233,7 @@ function exportTrainingsplanXLSX() {
     // --------------------------------------------------------
     const tps  = D.trainingsplan || [];
     const abos = D.abos || [];
-    const tage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+    const tage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
     //const tage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
 
     if (tps.length === 0) {
@@ -2597,57 +2598,6 @@ function exportTrainingsplanXLSX() {
 
     const filename = `${art}_${periodenStr}_${ts}.xlsx`;
     XLSX.writeFile(wb, filename);
-}
-
-function exportTrainingsplanPDF_() {
-    // Das DOM-Element, das exportiert werden soll
-    const element = document.querySelector("#tp_table");
-
-    if (!element) {
-        alert("Trainingsansicht nicht gefunden.");
-        return;
-    }
-
-    // Dateiname
-    const now = new Date();
-    const ts  = now.toISOString().replace(/[:]/g,"-").slice(0,16);
-    const art = (D.settings?.art ?? "plan");
-    const periodenStr = (D.settings?.jahre?.join("-") ?? "jahre");
-
-    const filename = `${art}_${periodenStr}_${ts}.pdf`;
-
-    // Zoom-Faktor (0.75 entspricht 75% Größe)
-    const zoomFactor = 0.75; 
-
-    const opt = {
-        margin:       [5, 10, 5, 10],
-        filename:     filename,
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { 
-            scale: 3, 
-            useCORS: true,
-            // Hier passiert die Magie:
-            onclone: (clonedDoc) => {
-                const element = clonedDoc.querySelector("#tp_table");
-                
-                // 1. Inhalt verkleinern
-                element.style.transform = `scale(${zoomFactor})`;
-                element.style.transformOrigin = 'top left';
-                
-                // 2. Breite kompensieren
-                // Wenn wir auf 75% (0.75) verkleinern, müssen wir den Container 
-                // auf 133% (1/0.75) verbreitern, damit er rechts nicht leer ist.
-                element.style.width = `${100 / zoomFactor}%`; 
-                
-                // Optional: Höhe anpassen, um weiße Ränder unten zu vermeiden
-                element.style.height = "auto"; 
-            }
-        },
-        jsPDF:        { unit: 'mm', format: 'a2', orientation: 'landscape' }
-    };
-
-    // PDF generieren
-    html2pdf().set(opt).from(element).save();
 }
 
 function exportTrainingsplanPDF() {
