@@ -7,26 +7,83 @@ body {
     color: #222;
 }
 
-/* Header */
-header {
-    background: #57A41B;;
-    color: white;
-    padding: 25px 20px;
-    text-align: center;      /* zentriert */
-    font-size: 26px;
-    font-weight: 600;
+/* =========================================================
+   Sticky-Header (Topbar)
+   - links: grün, feste Breite (Titel bricht nicht um)
+   - rechts: grau, Buttons (Flex + Wrap)
+   ========================================================= */
+
+header.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: stretch;
+    padding: 0;
+    background: transparent;
+}
+
+.topbar-left {
+    background: #57a41b;
+    color: #fff;
+    /* feste Breite, damit der Titel nie umbricht */
+    flex: 0 0 420px;
+    min-width: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+}
+
+.topbar-title {
+    font-size: 22px;
+    font-weight: 700;
     letter-spacing: 0.5px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.topbar-right {
+    background: #d9d9d9;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+}
+
+.topbar-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 /* Standard-Button */
 button {
     padding: 10px 20px;
     border: none;
-    background: #57A41B;
+    background: #57a41b;
     color: white;
     border-radius: 4px;
     cursor: pointer;
     font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    box-sizing: border-box;
+}
+
+/* Graue Header-Buttons */
+.btnGrey {
+    background: #bbb;
+}
+
+/* Datei-Upload-Label im Header */
+.header-btn {
+    margin-top: 0;
 }
 button:hover {
     background: black;
@@ -41,35 +98,36 @@ input#jsonLoader[type="file"] {
     display: none;
 }
 .file-upload {
-    margin-top:12px;
-    padding: 8.5px 20px;
+    /* im Header soll das Upload-Label wie ein normaler Button wirken */
+    margin: 0;
+    padding: 10px 20px;
     border: none;
     background: #bbb;
     color: white;
     border-radius: 4px;
     cursor: pointer;
     font-size: 15px;
+    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    box-sizing: border-box;
 }
 .file-upload:hover {
     background: black;
 }
 
-#btnAboNeu, #btnTrainerNeu, #btnSpielerNeu, #btnTPNeu, #btnCalcKosten {
+#btnPlatzNeu,
+#btnAboNeu,
+#btnTrainerNeu,
+#btnSpielerNeu,
+#btnTPNeu,
+#btnCalcKosten {
     margin-bottom: 12px;
 }
 
-#modul-1-start {
-    display: flex;
-    justify-content: center;     /* Buttons in der Mitte */
-    align-items: center;
-    gap: 15px;                   /* Abstand zwischen Buttons */
-    padding: 20px;
-}
-
-#modul-1-start input[type="file"] {
-    padding: 8px;
-    border-radius: 4px;
-}
+/* Hinweis: #modul-1-start wurde durch den Sticky-Header ersetzt (keine Styles mehr nötig). */
 
 /* ========= Karten- / Kachel-Design ========= */
 
@@ -78,7 +136,7 @@ input#jsonLoader[type="file"] {
     border-radius: 8px;
     padding: 25px;
     margin: 25px 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
 /* Abschnittsüberschriften */
@@ -86,11 +144,15 @@ input#jsonLoader[type="file"] {
     margin-top: 0;
     margin-bottom: 15px;
     font-size: 22px;
-    color: #57A41B;
+    color: #57a41b;
 }
 
-/* Labels */
-label {
+/* Labels
+   Wichtig: Nur im Inhaltsbereich/Dialogs stylen.
+   Sonst beeinflusst das z.B. das Upload-Label im Header ("Projekt laden").
+*/
+#app label,
+#dialog label {
     display: inline-block;
     margin-right: 20px;
     margin-bottom: 12px;
@@ -98,11 +160,17 @@ label {
 }
 
 /* Inputs */
-input[type="date"], input[type="text"], input[type="email"], input[type="time"], input[type="number"], input[type="checkbox"], select {
+input[type="date"],
+input[type="text"],
+input[type="email"],
+input[type="time"],
+input[type="number"],
+input[type="checkbox"],
+select {
     padding: 5px 5px;
     border: 1px solid #bbb;
     border-radius: 4px;
-    margin-top: 8px; */
+    margin-top: 8px;
     /* font-size: 15px; */
     background: white;
 }
@@ -115,7 +183,7 @@ table {
     background: white;
     border-radius: 6px;
     overflow: hidden;
-    border: 1px solid #bbb;    /* Außenrahmen */
+    border: 1px solid #bbb; /* Außenrahmen */
 }
 
 th {
@@ -164,7 +232,7 @@ tr:last-child td {
     position: fixed;
     inset: 0;
     display: none;
-    background: rgba(0,0,0,0.55);
+    background: rgba(0, 0, 0, 0.55);
     justify-content: center;
     align-items: center;
 }
@@ -174,13 +242,95 @@ tr:last-child td {
 }
 
 #dialog {
+    position: relative;
     background: #fff;
     padding: 30px;
     border-radius: 8px;
-    max-width: 600px;
+    /* Default = message (wird durch Dialog-Typen überschrieben) */
+    width: min(92vw, 650px);
+    max-width: 650px;
+    /* damit lange Texte/Dateinamen/Listen den Dialog nicht sprengen */
     white-space: normal;
-    /* width: 90%; */
-    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    /* bei vielen Inhalten scrollbar statt "aus dem Bildschirm" */
+    max-height: min(88vh, 900px);
+    overflow: auto;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Dialog-Typen (werden per JS gesetzt)
+   - message: schmaler (Standard)
+   - form: breiter für Eingabeformulare
+   - wide: extra breit für lange Listen/Infos
+*/
+#dialog.dialog--message {
+    width: min(92vw, 650px);
+    max-width: 650px;
+}
+
+#dialog.dialog--form {
+    /* Formulare sollen nicht "riesig" werden: inhaltsbasiert, aber begrenzt */
+    width: max-content;
+    max-width: 680px;
+}
+
+#dialog.dialog--wide {
+    /* z.B. für Lösch-Infos mit langen Listen: bewusst etwas breiter, aber nicht „riesig“ */
+    width: min(96vw, 760px);
+    max-width: 760px;
+}
+
+/* Layer-Meldungen über einem offenen Formular-Dialog */
+.dlg-layer {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*
+       Wichtig: Das Layer-Panel liegt innerhalb des Formular-Dialogs (#dialog).
+       Wenn hier Padding gesetzt ist, wirkt die Layer-Box automatisch ein paar Pixel schmaler.
+       Für optische Gleichbreite: kein Padding am Layer, die Box übernimmt die volle Breite.
+    */
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: inherit;
+}
+
+.dlg-layer-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    /* Layer-Hinweise sollen exakt so breit wirken wie das Formular darunter */
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    max-height: min(80vh, 780px);
+    overflow: auto;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Listen in Meldungs-/Löschdialogen: sauber umbrechen, damit der Dialog nicht unnötig breit wird */
+#dialog ul,
+.dlg-layer-box ul {
+    padding-left: 22px;
+}
+
+#dialog li,
+.dlg-layer-box li {
+    margin: 6px 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.dlg-layer-box h3 {
+    margin-top: 0;
+    color: #57a41b;
 }
 
 #dialog button {
@@ -189,13 +339,19 @@ tr:last-child td {
 }
 
 #dialog select {
-    width: 100%;         /* Dropdown nimmt die ganze Breite */
+    width: 100%; /* Dropdown nimmt die ganze Breite */
     box-sizing: border-box;
 }
 
 #dialog h3 {
     margin-top: 0;
-    color: #57A41B;
+    color: #57a41b;
+}
+
+/* Textblöcke in Meldungs-/Bestätigungsdialogen (\n soll sichtbar bleiben) */
+.dlg-text {
+    margin: 15px 0;
+    white-space: pre-line;
 }
 
 /* ==== Akkordeon für Feiertage & Ferien ==== */
@@ -250,26 +406,26 @@ tr:last-child td {
    MODUL 8 – Tabellenlayout
    ========================================================= */
 
-.mod8-table {
+.tp-overview-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
+    /* margin-top: 15px; */
     font-size: 14px;
 }
 
 /* Standardzellen */
-.mod8-table th,
-.mod8-table td {
+.tp-overview-table th,
+.tp-overview-table td {
     border: 1px solid #ccc;
     padding: 4px 6px;
     vertical-align: top;
     background: #fff;
-    height: 20px;  /* FESTE ZEILENHÖHE */
+    height: 20px; /* FESTE ZEILENHÖHE */
 }
 
 /* Zeitspalte */
-.mod8-col-time,
-.mod8-time {
+.tp-overview-col-time,
+.tp-overview-time {
     width: 30px !important;
     text-align: center !important;
     white-space: nowrap;
@@ -277,22 +433,21 @@ tr:last-child td {
     font-weight: bold;
 }
 
-.mod8-empty {
+.tp-overview-empty {
     background: #fff !important;
 }
-
 
 /* =========================================================
    TRAININGSBLOCK – HINTERGRUND & RAHMEN
    ========================================================= */
 
 /* Jeder Block bekommt grauen Hintergrund */
-.mod8-blockcell {
+.tp-overview-blockcell {
     background: #f5f5f5 !important;
 }
 
 /* Standardmäßig ALLE inneren Linien entfernen */
-.mod8-blockcell {
+.tp-overview-blockcell {
     border-top: none !important;
     border-bottom: none !important;
     border-left: none !important;
@@ -300,26 +455,25 @@ tr:last-child td {
 }
 
 /* Außenrahmen — 2px */
-.mod8-block-top {
+.tp-overview-block-top {
     border-top: 2px solid #999 !important;
 }
-.mod8-block-bottom {
+.tp-overview-block-bottom {
     border-bottom: 2px solid #999 !important;
 }
-.mod8-block-left {
+.tp-overview-block-left {
     border-left: 2px solid #999 !important;
 }
-.mod8-block-right {
+.tp-overview-block-right {
     border-right: 2px solid #999 !important;
     text-align: right;
 }
-
 
 /* =========================================================
    SPEZIALFÄLLE LEERE ZELLEN IM BLOCK
    ========================================================= */
 
-.mod8-cell-inner-empty {
+.tp-overview-cell-inner-empty {
     background: #f5f5f5 !important;
 }
 
@@ -327,18 +481,18 @@ tr:last-child td {
    MODUL 8 – Kopfzeilen & Zeitspalte Hintergrund
    =============================================== */
 
-.mod8-table thead tr:first-child th {
-    background: #dedede;        /* dein Grün */
+.tp-overview-table thead tr:first-child th {
+    background: #dedede; /* dein Grün */
     color: black;
     font-weight: bold;
 }
 
-.mod8-table thead tr:nth-child(2) th {
-    background: #e9e9e9;        /* sehr hell als Beruhigung */
+.tp-overview-table thead tr:nth-child(2) th {
+    background: #e9e9e9; /* sehr hell als Beruhigung */
 }
 
-.mod8-col-time,
-.mod8-time {
+.tp-overview-col-time,
+.tp-overview-time {
     background: #e9e9e9 !important;
     color: black;
     border-right: 1px solid #dedede !important;

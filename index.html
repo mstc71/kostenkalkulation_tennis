@@ -8,20 +8,22 @@
 </head>
 <body>
 
-    <header>
-        <h1>Kostenkalkulation - Training</h1>
+    <header class="topbar" id="topbar">
+        <div class="topbar-left">
+            <div class="topbar-title">Kostenkalkulation - Training</div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-actions">
+                <button id="btnNeuesProjekt">Neues Projekt starten</button>
+
+                <label for="jsonLoader" class="file-upload header-btn">Projekt laden</label>
+                <input type="file" id="jsonLoader" accept="application/json"/>
+
+                <button id="btnSaveProject" class="btnGrey" disabled>Projekt speichern</button>
+                <button id="btnExportAll" class="btnGrey" style="display:none;">Kosten und Trainingsplan exportieren</button>
+            </div>
+        </div>
     </header>
-
-    <!-- Startbereich -->
-    <section id="modul-1-start">
-        <button id="btnNeuesProjekt">Neues Projekt starten</button>
-        <label for="jsonLoader" class="file-upload">
-	        Projekt laden
-            <!-- <span>Projekt laden</span> -->
-        </label>
-        <input type="file" id="jsonLoader" accept="application/json"/>
-
-    </section>
 
     <!-- Overlay für Dialog -->
     <div id="overlay">
