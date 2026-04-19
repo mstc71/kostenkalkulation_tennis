@@ -2243,7 +2243,7 @@ function tp_renderList(container) {
                         const sp = D.spieler.find((s) => s.id === id);
                         return sp ? sp.name : "Unbekannt";
                     })
-                    .join(", ")}</td>
+                    .join(" | ")}</td>
 
                 <td>
                     <button onclick="tp_dialogOpen('${tp.id}')">✎</button>
