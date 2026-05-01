@@ -985,7 +985,7 @@ function plaetze_renderSection(app) {
 
 function plaetze_renderList(container) {
     if (!D.plaetze || D.plaetze.length === 0) {
-        container.innerHTML = "<p><em>Noch keine Plätze angelegt.</em></p>";
+        container.innerHTML = "<p>Es wurden noch keine Plätze angelegt.</p>";
         return;
     }
 
